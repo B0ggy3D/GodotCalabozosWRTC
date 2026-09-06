@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterClassData" format=3 uid="uid://1btc88c15kmj"]
+
+[ext_resource type="Script" uid="uid://6wfwwsi1sj0p" path="res://scripts/core/resources/character_class_data.gd" id="1_m7ma1"]
+[ext_resource type="Script" uid="uid://fxvjv28wc0wr" path="res://scripts/core/resources/weapon_data.gd" id="2_24mxu"]
+[ext_resource type="Resource" uid="uid://b6vgvv532seq2" path="res://resources/basic_sword.tres" id="3_24mxu"]
+
+[resource]
+script = ExtResource("1_m7ma1")
+class_id = "warrior"
+display_name = "Warrior"
+max_hp = 12
+starting_weapons = Array[ExtResource("2_24mxu")]([ExtResource("3_24mxu")])
+metadata/_custom_type_script = "uid://6wfwwsi1sj0p"

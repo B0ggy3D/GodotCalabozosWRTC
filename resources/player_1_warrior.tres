@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterInstanceData" format=3 uid="uid://bjtlylfvi3dqu"]
+
+[ext_resource type="Resource" uid="uid://1btc88c15kmj" path="res://resources/warrior_class.tres" id="1_7qgpc"]
+[ext_resource type="Script" uid="uid://c065mgsgmcwpj" path="res://scripts/core/resources/character_instance_data.gd" id="1_g8c3j"]
+
+[resource]
+script = ExtResource("1_g8c3j")
+class_data = ExtResource("1_7qgpc")
+metadata/_custom_type_script = "uid://c065mgsgmcwpj"

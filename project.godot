@@ -18,6 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 GridManager="*uid://oikrc8ulia5t"
+TurnManager="*uid://ddxuspxuljw5m"
+DiceSystem="*uid://gcddqjmcp3s5"
+CombatSystem="*uid://difhbytncibxt"
+GameState="*uid://dthkrphtaenj5"
 
 [display]
 

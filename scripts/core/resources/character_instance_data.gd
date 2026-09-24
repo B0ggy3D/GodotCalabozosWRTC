@@ -16,3 +16,6 @@ extends Resource
 ## Inventario y equipo actual
 @export var equipped_weapon: WeaponData = null
 # (El inventario completo se manejará en un sistema separado más adelante)
+
+## Habilidades conocidas por este personaje
+@export var abilities: Array[AbilityData] = []

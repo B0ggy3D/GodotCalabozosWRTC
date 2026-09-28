@@ -104,7 +104,7 @@ func resolve_ability(user_data: CharacterInstanceData, ability: AbilityData, tar
 	
 	# Paso 1: Validar rango
 	if target_data != null:
-		var distance = _manhattan_distance(user_data.grid_position, target_data.grid_position)
+		var distance = _combat_distance(user_data.grid_position, target_data.grid_position)
 		if distance > ability.range_tiles:
 			result.validation_error = "Objetivo fuera de rango (distancia: %d, rango: %d)" % [distance, ability.range_tiles]
 			emit_signal("combat_resolved", result)
@@ -159,7 +159,8 @@ func _validate_range(attacker: CharacterInstanceData, target: CharacterInstanceD
 		result.reason = "Objetivo fuera del tablero"
 		return result
 	
-	var distance = _manhattan_distance(attacker.grid_position, target.grid_position)
+	var distance = _combat_distance(attacker.grid_position, target.grid_position)
+	
 	
 	var weapon_range = 1
 	if attacker.equipped_weapon:
@@ -195,6 +196,10 @@ func _validate_target_type(ability: AbilityData, user: CharacterInstanceData, ta
 
 func _manhattan_distance(a: Vector2i, b: Vector2i) -> int:
 	return abs(a.x - b.x) + abs(a.y - b.y)
+	## Distancia de combate (Chebyshev): las diagonales cuentan como 1.
+## Permite atacar a las 8 casillas alrededor, como en D&D.
+func _combat_distance(a: Vector2i, b: Vector2i) -> int:
+	return max(abs(a.x - b.x), abs(a.y - b.y))
 
 func _calculate_base_damage(weapon: WeaponData) -> int:
 	var damage_result = DiceSystem.roll_dice(weapon.dice_count, weapon.dice_sides, 0)

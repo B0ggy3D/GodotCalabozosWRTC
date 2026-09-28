@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://bdg38duckslvd"]
+
+[ext_resource type="FontFile" uid="uid://3ltw1dxehgip" path="res://assets/fonts/PressStart2P.ttf" id="1_2d250"]
+
+[resource]
+default_font = ExtResource("1_2d250")
+default_font_size = 16

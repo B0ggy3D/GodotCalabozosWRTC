@@ -10,36 +10,19 @@ config_version=5
 
 [application]
 
-config/name="ProyectoCalabozosNDragones"
-run/main_scene="uid://xlq1jmh5l77k"
+config/name="ProyectoSemilleroWRTC"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GridManager="*uid://oikrc8ulia5t"
-TurnManager="*uid://ddxuspxuljw5m"
-DiceSystem="*uid://gcddqjmcp3s5"
-CombatSystem="*uid://difhbytncibxt"
-GameState="*uid://dthkrphtaenj5"
-Pathfinding="*uid://cekbrs2mjm6pl"
+GameManager="*uid://bdhod6pwxklov"
+NetworkManager="*uid://x2d556gywqfw"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-
-[file_customization]
-
-folder_colors={
-"res://assets/": "green",
-"res://autoload/": "teal",
-"res://data/": "red",
-"res://docs/": "blue",
-"res://resources/": "purple",
-"res://scenes/": "pink",
-"res://scripts/": "yellow"
-}
 
 [physics]
 

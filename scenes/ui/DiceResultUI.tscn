@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://1we3y2tbx2u1"]
+
+[ext_resource type="Script" uid="uid://b8haw5a6iwksx" path="res://scripts/ui/DiceResultUI.gd" id="1_kv3pb"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=545255150]
+script = ExtResource("1_kv3pb")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=692239851]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.50140655, 0.5014065, 0.5014065, 0.7058824)
+
+[node name="DicePanel" type="PanelContainer" parent="Overlay" unique_id=2068511534]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/DicePanel" unique_id=137736740]
+layout_mode = 2
+
+[node name="DiceTitle" type="Label" parent="Overlay/DicePanel/VBoxContainer" unique_id=1995476965]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "TITULO DE PRUEBA"
+horizontal_alignment = 1
+
+[node name="DiceIcon" type="TextureRect" parent="Overlay/DicePanel/VBoxContainer" unique_id=1873095708]
+layout_mode = 2
+
+[node name="DiceValue" type="Label" parent="Overlay/DicePanel/VBoxContainer" unique_id=525779360]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "20"
+horizontal_alignment = 1
+
+[node name="ResultText" type="Label" parent="Overlay/DicePanel/VBoxContainer" unique_id=287536184]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Resultado"
+horizontal_alignment = 1

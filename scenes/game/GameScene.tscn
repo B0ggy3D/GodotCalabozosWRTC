@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bt4mkdrhq2rf"]
+
+[ext_resource type="Script" uid="uid://c16fpxvj3hkfi" path="res://scripts/game/game_setup.gd" id="1_vaave"]
+[ext_resource type="Script" uid="uid://bei5n7ry23ter" path="res://scripts/game/game_board_visual.gd" id="2_gs0nk"]
+[ext_resource type="Script" uid="uid://b6fyr6tn6lf2v" path="res://scripts/game/game_flow_controller.gd" id="3_b1len"]
+[ext_resource type="PackedScene" uid="uid://c10b0oaov1e2b" path="res://scenes/ui/HUD.tscn" id="4_ks7xl"]
+
+[node name="GameScene" type="Node2D" unique_id=285546869]
+script = ExtResource("1_vaave")
+
+[node name="GameBoardVisual" type="Node2D" parent="." unique_id=912300209]
+script = ExtResource("2_gs0nk")
+
+[node name="Entities" type="Node2D" parent="." unique_id=2116376326]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=652940057]
+position = Vector2(320, 320)
+
+[node name="GameFlowController" type="Node" parent="." unique_id=2042286583]
+script = ExtResource("3_b1len")
+
+[node name="UILayer" parent="." unique_id=545255150 instance=ExtResource("4_ks7xl")]

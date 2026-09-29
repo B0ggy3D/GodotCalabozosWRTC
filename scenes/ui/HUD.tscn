@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://c10b0oaov1e2b"]
+
+[ext_resource type="Script" uid="uid://b8haw5a6iwksx" path="res://scripts/ui/DiceResultUI.gd" id="1_kw0id"]
+[ext_resource type="Theme" uid="uid://bdg38duckslvd" path="res://assets/ui/pixel_theme.tres" id="2_6ll6g"]
+[ext_resource type="Script" uid="uid://b7yhrqgfw7jfl" path="res://scripts/ui/HUDController.gd" id="2_atyv1"]
+[ext_resource type="Script" uid="uid://dm6uyfq3ead1t" path="res://scripts/ui/TouchControls.gd" id="4_ig75s"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=545255150]
+script = ExtResource("1_kw0id")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=692239851]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.50140655, 0.5014065, 0.5014065, 0.7058824)
+
+[node name="DicePanel" type="PanelContainer" parent="Overlay" unique_id=2068511534]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overlay/DicePanel" unique_id=137736740]
+layout_mode = 2
+
+[node name="DiceTitle" type="Label" parent="Overlay/DicePanel/VBoxContainer" unique_id=1995476965]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "TITULO DE PRUEBA"
+horizontal_alignment = 1
+
+[node name="DiceIcon" type="TextureRect" parent="Overlay/DicePanel/VBoxContainer" unique_id=1873095708]
+layout_mode = 2
+
+[node name="DiceValue" type="Label" parent="Overlay/DicePanel/VBoxContainer" unique_id=525779360]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "20"
+horizontal_alignment = 1
+
+[node name="ResultText" type="Label" parent="Overlay/DicePanel/VBoxContainer" unique_id=287536184]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Resultado"
+horizontal_alignment = 1
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2046640191]
+
+[node name="HUDRoot" type="Control" parent="HUD" unique_id=1885007530]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_6ll6g")
+script = ExtResource("2_atyv1")
+
+[node name="TopBar" type="PanelContainer" parent="HUD/HUDRoot" unique_id=585135576]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDRoot/TopBar" unique_id=1587336360]
+layout_mode = 2
+
+[node name="TurnIndicator" type="Label" parent="HUD/HUDRoot/TopBar/HBoxContainer" unique_id=2112106143]
+layout_mode = 2
+text = "Turno: Jugador 1: "
+horizontal_alignment = 1
+
+[node name="ActionsIndicator" type="Label" parent="HUD/HUDRoot/TopBar/HBoxContainer" unique_id=791268848]
+layout_mode = 2
+text = "Acciones: 2/2"
+horizontal_alignment = 1
+
+[node name="CharacterStats" type="PanelContainer" parent="HUD/HUDRoot" unique_id=1866690861]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -130.0
+offset_right = 230.0
+grow_vertical = 0
+offset_transform_enabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/HUDRoot/CharacterStats" unique_id=1712623126]
+layout_mode = 2
+
+[node name="CharacterName" type="Label" parent="HUD/HUDRoot/CharacterStats/VBoxContainer" unique_id=1259336888]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.003921569, 0.003921569, 1)
+text = "Guerrero	"
+
+[node name="HPBar" type="ProgressBar" parent="HUD/HUDRoot/CharacterStats/VBoxContainer" unique_id=2082144673]
+layout_mode = 2
+value = 100.0
+
+[node name="HPText" type="Label" parent="HUD/HUDRoot/CharacterStats/VBoxContainer" unique_id=1122577136]
+layout_mode = 2
+text = "100/100"
+
+[node name="ArmorText" type="Label" parent="HUD/HUDRoot/CharacterStats/VBoxContainer" unique_id=120398916]
+layout_mode = 2
+text = "Armadura: 2"
+
+[node name="TouchControls" type="Control" parent="." unique_id=996464029]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_ig75s")
+
+[node name="EndTurnButton" type="Button" parent="TouchControls" unique_id=1698487506]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Fin de Turno"

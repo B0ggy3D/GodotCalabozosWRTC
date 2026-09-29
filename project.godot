@@ -22,6 +22,8 @@ TurnManager="*uid://ddxuspxuljw5m"
 DiceSystem="*uid://gcddqjmcp3s5"
 CombatSystem="*uid://difhbytncibxt"
 GameState="*uid://dthkrphtaenj5"
+Pathfinding="*uid://cekbrs2mjm6pl"
+GameScene="*uid://bt4mkdrhq2rf"
 
 [display]
 

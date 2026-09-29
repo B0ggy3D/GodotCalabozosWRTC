@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://xlq1jmh5l77k"]
 
-[ext_resource type="Script" uid="uid://cyxaxgirsjweg" path="res://scripts/core/test_integration.gd" id="1_g7g4h"]
+[ext_resource type="Script" uid="uid://dcfgsayju3n7n" path="res://scripts/entities/test_pathfinding_movement.gd" id="1_g7g4h"]
 
 [node name="TestScene" type="Node" unique_id=2141529419]
 script = ExtResource("1_g7g4h")

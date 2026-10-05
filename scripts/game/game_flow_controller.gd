@@ -17,6 +17,8 @@ var selected_character_id: String = ""
 var local_player_id: String = "net_player_1"
 var character_controllers: Dictionary = {}
 var game_debug: Node = null
+var end_turn_button: Button = null
+var debug_mode_active: bool = false
 
 func _ready():
 	_find_ui_nodes()
@@ -51,6 +53,7 @@ func _find_ui_nodes():
 	for node in get_tree().get_root().get_children():
 		_search_for_hud(node)
 		_search_for_dice_ui(node)
+		_search_for_end_turn_button(node)
 
 func _search_for_hud(node: Node):
 	if node.has_method("update_actions"):
@@ -112,6 +115,12 @@ func _is_enemy(data: CharacterInstanceData) -> bool:
 # =========================================================================
 
 func _on_cell_clicked(grid_pos: Vector2i):
+	# MODO DEBUG ACTIVO (celular): tocar una casilla abre el menu
+	if debug_mode_active and game_debug and game_debug.has_method("open_at"):
+		var screen_pos = get_viewport().get_mouse_position()
+		game_debug.open_at(grid_pos, screen_pos)
+		return
+	
 	if not TurnManager.is_player_turn(local_player_id):
 		return
 	var cell = GridManager.get_cell(grid_pos)
@@ -126,13 +135,35 @@ func _try_move(target_pos: Vector2i):
 	var player_char = GameState.get_player_character(local_player_id)
 	if player_char == null:
 		return
+	
+	var cell = GridManager.get_cell(target_pos)
+	var logic_walkable = GridManager.is_walkable(target_pos)
+	
+	print("=== DIAGNOSTICO MOVIMIENTO ===")
+	print("  Destino clickeado: ", target_pos)
+	print("  cell existe: ", cell != null)
+	if cell != null:
+		print("  cell.is_walkable (propiedad): ", cell.is_walkable)
+		print("  cell.is_occupied(): ", cell.is_occupied())
+	print("  GridManager.is_walkable(): ", logic_walkable)
+	print("===============================")
+	
+	# ESTRICTO: nunca mover a casilla no caminable
+	if not logic_walkable:
+		print("[GameFlowController] Rechazado: casilla no caminable ", target_pos)
+		return
+	
 	var controller = character_controllers.get(player_char.character_id)
 	if controller == null:
 		return
+	
 	var area = _get_movement_area(player_char.grid_position)
+	print("  Destino en area de movimiento: ", area.has(target_pos))
+	
 	if not area.has(target_pos):
 		print("[GameFlowController] Destino fuera del area de movimiento")
 		return
+	
 	controller.move_to(target_pos)
 
 func _try_attack(target_id: String):
@@ -380,6 +411,21 @@ func refresh_highlights_and_hud():
 	_update_hud_weapon()
 	_refresh_movement_highlight()
 	_refresh_attack_highlight()
+
+## Busca el boton "Fin de Turno" en la escena y lo conecta
+func _search_for_end_turn_button(node: Node):
+	if node.name == "EndTurnButton" and node is Button:
+		end_turn_button = node
+		end_turn_button.pressed.connect(_on_end_turn_button_pressed)
+		print("[GameFlowController] Boton Fin de Turno conectado")
+		return
+	for child in node.get_children():
+		_search_for_end_turn_button(child)
+
+func _on_end_turn_button_pressed():
+	if TurnManager.is_player_turn(local_player_id):
+		print("[GameFlowController] Terminando turno desde boton...")
+		TurnManager.end_current_turn()
 
 # =========================================================================
 # UTILIDADES

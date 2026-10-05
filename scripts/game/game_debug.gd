@@ -1,5 +1,7 @@
 extends Node
 ## GameDebug: Modo debug autocontenido (menu contextual, spawn, paredes, armas).
+## En desktop: clic derecho abre el menu.
+## En celular: activar el boton "DEBUG" y luego tocar una casilla abre el menu.
 
 signal option_selected(option: String, grid_pos: Vector2i)
 
@@ -11,6 +13,7 @@ var debug_enabled: bool = true
 var is_open: bool = false
 var current_cell: Vector2i = Vector2i.ZERO
 
+var toggle_button: Button = null
 var panel: PanelContainer
 var buttons: Dictionary = {}
 
@@ -28,6 +31,21 @@ func _create_menu():
 	debug_layer.layer = 10
 	add_child(debug_layer)
 	
+	# --- Boton toggle DEBUG (siempre visible, esquina superior derecha) ---
+	toggle_button = Button.new()
+	toggle_button.text = "DEBUG: OFF"
+	toggle_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	toggle_button.custom_minimum_size = Vector2(140, 44)
+	toggle_button.add_theme_font_size_override("font_size", 14)
+	debug_layer.add_child(toggle_button)
+	toggle_button.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	toggle_button.offset_left = -160
+	toggle_button.offset_top = 70
+	toggle_button.offset_right = -10
+	toggle_button.offset_bottom = 114
+	toggle_button.pressed.connect(_toggle_debug_mode)
+	
+	# --- Menu contextual (oculto por defecto) ---
 	debug_menu = Control.new()
 	debug_menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	debug_layer.add_child(debug_menu)
@@ -41,17 +59,14 @@ func _create_menu():
 	vbox.add_theme_constant_override("separation", 6)
 	panel.add_child(vbox)
 	
-	# Acciones de celda
 	buttons["add_enemy"] = _make_button(vbox, "Añadir Enemigo")
 	buttons["add_ally"] = _make_button(vbox, "Añadir Aliado")
 	buttons["toggle_wall"] = _make_button(vbox, "Poner/Quitar Pared")
 	buttons["remove_entity"] = _make_button(vbox, "Quitar Entidad")
 	
-	# Separador visual
 	var sep = HSeparator.new()
 	vbox.add_child(sep)
 	
-	# Acciones de arma (solo si hay entidad en la celda)
 	buttons["equip_unarmed"] = _make_button(vbox, "Arma: Desarmado (r1)")
 	buttons["equip_sword"] = _make_button(vbox, "Arma: Espada (r1)")
 	buttons["equip_spear"] = _make_button(vbox, "Arma: Lanza (r2)")
@@ -83,6 +98,20 @@ func _make_button(parent: Node, text: String) -> Button:
 	parent.add_child(b)
 	return b
 
+## Alterna el modo debug (usado por el boton toggle, ideal para celular)
+func _toggle_debug_mode():
+	if flow == null:
+		return
+	flow.debug_mode_active = not flow.debug_mode_active
+	if flow.debug_mode_active:
+		toggle_button.text = "DEBUG: ON"
+		toggle_button.modulate = Color(1.0, 0.8, 0.2)
+	else:
+		toggle_button.text = "DEBUG: OFF"
+		toggle_button.modulate = Color.WHITE
+		_close_menu()
+	print("[GameDebug] Modo debug: ", flow.debug_mode_active)
+
 func open_at(grid_pos: Vector2i, screen_pos: Vector2):
 	current_cell = grid_pos
 	is_open = true
@@ -103,7 +132,6 @@ func open_at(grid_pos: Vector2i, screen_pos: Vector2):
 		buttons["remove_entity"].disabled = not occupied
 		buttons["add_enemy"].disabled = occupied or not cell.is_walkable
 		buttons["add_ally"].disabled = occupied or not cell.is_walkable
-		# Las armas solo se pueden equipar si hay una entidad
 		buttons["equip_unarmed"].disabled = not occupied
 		buttons["equip_sword"].disabled = not occupied
 		buttons["equip_spear"].disabled = not occupied
@@ -120,6 +148,7 @@ func _emit(option: String):
 func _unhandled_input(event):
 	if not debug_enabled:
 		return
+	# Desktop: clic derecho abre el menu
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
 		if board:
 			var world_pos = board.get_global_mouse_position()
@@ -128,6 +157,7 @@ func _unhandled_input(event):
 				open_at(grid_pos, event.position)
 				get_viewport().set_input_as_handled()
 				return
+	# Cerrar con clic fuera o Escape
 	if is_open:
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			_close_menu()
@@ -171,9 +201,6 @@ func _equip_weapon(grid_pos: Vector2i, weapon: WeaponData):
 	if data == null:
 		return
 	data.equipped_weapon = weapon
-	var wname = weapon.weapon_name if weapon else "Desarmado"
-	print("[GameDebug] ", data.character_name, " equipado con: ", wname)
-	# Refrescar HUD y highlights de ataque
 	if flow and flow.has_method("refresh_highlights_and_hud"):
 		flow.refresh_highlights_and_hud()
 
